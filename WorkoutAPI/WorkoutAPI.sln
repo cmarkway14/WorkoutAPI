@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutAPI", "WorkoutAPI\WorkoutAPI.csproj", "{0A5CC06D-110D-4C83-87A0-2F426B5D61AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{F305B6CF-23AA-4C87-ACC6-BBF59621B15F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0A5CC06D-110D-4C83-87A0-2F426B5D61AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A5CC06D-110D-4C83-87A0-2F426B5D61AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A5CC06D-110D-4C83-87A0-2F426B5D61AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F305B6CF-23AA-4C87-ACC6-BBF59621B15F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F305B6CF-23AA-4C87-ACC6-BBF59621B15F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F305B6CF-23AA-4C87-ACC6-BBF59621B15F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F305B6CF-23AA-4C87-ACC6-BBF59621B15F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
