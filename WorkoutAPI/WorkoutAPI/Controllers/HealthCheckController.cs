@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
+﻿using DataAccess;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using MongoDB.Driver;
 
 namespace WorkoutAPI.Controllers
@@ -7,47 +8,45 @@ namespace WorkoutAPI.Controllers
     [ApiController]
     public class HealthCheckController : Controller
     {
+        private readonly IWorkoutDataAccess _workoutDataAccess;
+        private readonly IMemoryCache _cache;
+        private readonly MemoryCacheEntryOptions _cacheEntryOptions;
+
+        public HealthCheckController(IWorkoutDataAccess workoutDataAccess, IMemoryCache cache)
+        {
+            _workoutDataAccess = workoutDataAccess;
+            _cache = cache;
+            _cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1));
+        }
+
         [Route("api/[controller]/check")]
         [HttpGet]
         public ActionResult Health()
         {
-            var mongoDBStatus = CheckMongoDbHealth();
-
-            if (mongoDBStatus)
-            {
-                return Ok($"MongoDB is up as of: {DateTime.Now.ToString("MM/dd/y h:mm tt")}");
-            }
-
-            return StatusCode(400, "MongoDB is not up, you might need to go reboot it");
-        }
-
-        private bool CheckMongoDbHealth()
-        {
+            bool mongoDBStatus;
             try
             {
-                var conn = "mongodb+srv://Cmarkway14:<PASSWORD>@workoutdb.nxwwqq9.mongodb.net/?retryWrites=true&w=majority";
-                var client = new MongoClient(conn);
-                var workoutDB = client.GetDatabase("Workout");
-
-                var healthCollection = workoutDB.GetCollection<MongoDdHealth>("Health");
-                var healthResult = healthCollection.Find(Builders<MongoDdHealth>.Filter.Empty).ToList();
-
-                if (healthResult.First().CanRead)
+                if(!_cache.TryGetValue("mongoDBStatus", out mongoDBStatus))
                 {
-                    return true;
+                    mongoDBStatus = _workoutDataAccess.DatabaseHealthCheck();
+
+                    _cache.Set("mongoDBStatus", mongoDBStatus, _cacheEntryOptions);
                 }
-                return false;
-            }catch(Exception ex)
+
+                if (mongoDBStatus)
+                {
+                    return Ok($"MongoDB is up as of: {DateTime.Now.ToString("MM/dd/y h:mm tt")}");
+                }
+
+                return StatusCode(400, "MongoDB is not up, you might need to go reboot it");
+            }
+            catch (Exception ex)
             {
-                return false;
+                return StatusCode(500, $"Error Occured: {ex}");
             }
 
-        }
-    }
 
-    public class MongoDdHealth
-    {
-        public ObjectId _id { get; set; }
-        public bool CanRead { get; set; }
+
+        }
     }
 }
