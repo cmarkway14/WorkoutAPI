@@ -11,5 +11,12 @@ namespace WorkoutAPI.Controllers
         {
             return Ok(Task.FromResult(true));
         }
+
+        [HttpGet]
+        [Route("test")]
+        public async Task<ActionResult> TestAction()
+        {
+            return Ok(Task.FromResult(true));
+        }
     }
 }
