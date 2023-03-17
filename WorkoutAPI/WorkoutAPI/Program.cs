@@ -1,6 +1,8 @@
 using DataAccess;
 using Microsoft.Extensions.DependencyInjection;
 using Models;
+using Models.interfaces;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,7 @@ var appConfig = config.GetRequiredSection("Config").Get<AppConfig>();
 
 builder.Services.AddSingleton<AppConfig>(appConfig);
 builder.Services.AddSingleton<IWorkoutDataAccess, WorkoutDataAccess>();
+builder.Services.AddSingleton<IProgramService, ProgramService>();
 builder.Services.AddMemoryCache();
 //DI END
 

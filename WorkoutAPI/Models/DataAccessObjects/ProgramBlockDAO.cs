@@ -5,12 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Models.Workout_Models;
 
-namespace Models.interfaces
+namespace Models.DataAccessObjects
 {
-    public interface IProgramService
+    public class ProgramBlockDAO : ProgramBlock
     {
-        Task<ProgramBlock> GetPrograms();
-
-        Task<bool> InsertProgram(ProgramBlock block);
     }
 }
