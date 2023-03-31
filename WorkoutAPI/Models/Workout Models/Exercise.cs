@@ -6,11 +6,15 @@ public class Exercise
 
     public string Description { get; set; }
 
-    public int Sets { get; set; }
+    public int? Sets { get; set; }
 
-    public double Weight { get; set; }
+    public double? Weight { get; set; }
 
     public Unit Unit { get; set; }
 
     public string Notes { get; set; }
+
+    public double? RPE { get; set; }
+
+    public string RestTime { get; set; }
 }
